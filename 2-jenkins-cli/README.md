@@ -20,6 +20,4 @@
 
 * Run, `jcli -s http://SERVER_IP:8080 help`
 
-* Optionally, you can export JENKINS_URL=http://SERVER_IP:8080 ti use jenkins
-  cli without server url parameter.
-
+* Optionally, you can export JENKINS_URL=http://SERVER_IP:808o0 to use jenkins cli without server url parameter or add JENKINS_URL value in /etc/environment.
