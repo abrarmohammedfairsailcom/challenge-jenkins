@@ -1,0 +1,21 @@
+pipeline {
+  agent any
+
+  stages {
+    stage('Build Slack Notifier App') {
+      steps {
+        sh 'make build-slack-sonar-app'
+      }
+    }
+    stage('Build Sonar Alpine') {
+      steps {
+        sh 'make build-sonar-alpine-app'
+      }
+    }
+    stage('Prune') {
+      steps {
+        sh 'make prune'
+      }
+    }
+  }
+}
