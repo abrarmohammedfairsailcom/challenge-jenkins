@@ -1,4 +1,4 @@
-#Usage
+# Usage
 
 * Create IAM group with  AmazonS3FullAccess, AWSCodeBuildDeveloperAccess  policy attached.
 * Create IAM user with programmatic access in AWS and assign the user the above group.
@@ -9,3 +9,12 @@
 * Keep the Jenkinsfile and buildspec.yml in the root of the project.
 * Test project build from CodeBuild.
 * Change appropriate values in polcies, Jenkinsfile according to your configuration.
+
+# Help
+
+* You can get the AWS account ID either from console or aws cli. To get from CLI implement the following command,
+
+```shell
+aws sts get-caller-identity --output text --query 'Account'
+```
+
