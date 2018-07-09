@@ -1,5 +1,6 @@
 # Usage
 
+* Remember CodeBuild, S3 must reside under same region when it comes to upload artifacts.
 * Gather CodeBuild service IP range from  [https://ip-ranges.amazonaws.com/ip-ranges.json](here) in case you want to allow that in RDS or any other security group to make the build process successful.
 * Create IAM group with  AmazonS3FullAccess (optional), AWSCodeBuildDeveloperAccess  policy attached.
 * Create IAM user with programmatic access in AWS and assign the user the above group.
