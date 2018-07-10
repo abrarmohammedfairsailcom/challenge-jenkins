@@ -6,6 +6,7 @@
 * Create IAM user with programmatic access in AWS and assign the user the above group.
 * Generate IAM user access key id and secret key. Note them down for later use.
 * Create IAM role with policies in the repository. See in #Help section.
+* If you want to use ECR docker baseimage then make sure you implement permission on specific registry for CodeBuild. Follow  [https://docs.aws.amazon.com/codebuild/latest/userguide/sample-ecr.html](this) documentation.
 * Install AWS CodeBuild plugin in Jenkins.
 * Create Jenkins credential as a CodeBuild Credentials type with IAM user access key ID and secret key.
 * Use IAM role ARN in advanced section of jenkins credential and make sure that no error appears in Jenkins.
