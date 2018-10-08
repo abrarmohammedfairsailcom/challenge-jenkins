@@ -1,0 +1,44 @@
+#!/usr/bin/env groovy
+@Library('jenkins-slack@git_branch') _
+
+def notifier = new org.example.jenkins.slack.SlackNotifier()
+
+node {
+  try {
+
+    env.SLACK_CHANNEL = 'build'
+    env.SLACK_DOMAIN  = 'example'
+    env.SLACK_CREDENTIALS = 'Slack-Build-Channel-Token'
+    env.CHANGE_LIST = 'true'
+    env.TEST_SUMMARY = 'false'
+    env.NOTIFY_SUCCESS = 'true'
+
+    stage('Checkout'){
+      checkout scm
+    }
+    stage('Start'){
+      notifier.notifyStart()
+    }
+    stage('Build'){
+      sh 'make build'
+    }
+    stage('Deploy'){
+      sh 'make deploy'
+    }
+    stage('Promote SCM'){
+      withCredentials([usernamePassword(credentialsId: 'jenkins-user-api-token', usernameVariable: 'USER', passwordVariable: 'TOKEN')]) {
+        sh 'curl -u ${USER}:${TOKEN} -X POST http://proj.ci.example.com/job/proj_name/build -H "Jenkins-Crumb:xxxxxx"'
+      }
+    }
+    } catch (err) {
+
+      currentBuild.result = 'FAILURE'
+      notifier.notifyError(err)
+      throw err
+
+    } finally {
+
+      notifier.notifyResult()
+
+    }
+}

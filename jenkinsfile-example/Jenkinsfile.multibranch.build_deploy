@@ -1,0 +1,50 @@
+#!/usr/bin/env groovy
+@Library('jenkins-slack@git_branch') _
+
+def notifier = new org.example.jenkins.slack.SlackNotifier()
+
+node {
+  try {
+
+    env.SLACK_CHANNEL = 'build'
+    env.SLACK_DOMAIN  = 'example'
+    env.SLACK_CREDENTIALS = 'Slack-Build-Channel-Token'
+    env.CHANGE_LIST = 'true'
+    env.TEST_SUMMARY = 'false'
+    env.NOTIFY_SUCCESS = 'true'
+
+    env.BRANCH_NAME_PROD = 'master'
+    env.BRANCH_NAME_STAGE = 'stage'
+    env.BRANCH_NAME_DEMO = 'demo'
+
+    stage('Checkout'){
+      checkout scm
+    }
+    stage('Start'){
+      notifier.notifyStart()
+    }
+    stage('Build'){
+      if (env.BRANCH_NAME == env.BRANCH_NAME_PROD){
+        sh 'make build-app'
+      }
+      else if (env.BRANCH_NAME == env.BRANCH_NAME_DEMO){
+        sh 'make build-demo'
+      }
+    }
+    stage('Deploy'){
+      if (env.BRANCH_NAME == env.BRANCH_NAME_PROD){
+        sh 'make deploy-app'
+      }
+      else if (env.BRANCH_NAME == env.BRANCH_NAME_DEMO){
+        sh 'make deploy-demo'
+      }
+    }
+    } catch (err) {
+      currentBuild.result = 'FAILURE'
+      notifier.notifyError(err)
+      throw err
+
+    } finally {
+      notifier.notifyResult()
+    }
+}
