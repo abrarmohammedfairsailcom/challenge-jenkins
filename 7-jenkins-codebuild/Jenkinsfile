@@ -4,7 +4,7 @@ import jenkins.model.*
 
 node {
   stage('Build') {
-    awsCodeBuild projectName: "$CODEBUILD_PROJECT_NAME", region: "$REGION", sourceControlType: "project", credentialsId: "$JENKINS_CREDENTIAL_ID", credentialsType: "jenkins"
+    awsCodeBuild projectName: "testJenkinsCB", region: "us-west-2", sourceControlType: "project", credentialsId: "CodeBuild_AWS_ID", credentialsType: "jenkins"
   }
 }
 
