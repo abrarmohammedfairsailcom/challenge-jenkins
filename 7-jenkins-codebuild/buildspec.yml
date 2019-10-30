@@ -9,4 +9,4 @@ phases:
       - echo "using buildspec.yml"
   post_build:
     commands:
-      - echo "build finished"
+      - echo "build is finished"
