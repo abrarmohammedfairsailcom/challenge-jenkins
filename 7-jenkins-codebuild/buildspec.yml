@@ -6,7 +6,7 @@ phases:
       dotnet: 2.2
   pre_build:
     commands:
-      - echo "using buildspec.yml"
+      - echo "using buildspec.yml from branch"
   post_build:
     commands:
       - echo "build is finished"
